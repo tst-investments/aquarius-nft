@@ -49,7 +49,7 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
           </div>
 
           <div className="text-modalText flex flex-col gap-8 items-start mb-12">
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <InlineSVG
                 src="/images/photo_camera-2.svg"
                 className="fill-current text-icon"
@@ -69,13 +69,19 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
                 className="fill-current text-icon"
               />
               <p className="text-sm">{texts.about.third}</p>
+            </div> */}
+            <div className="flex gap-3 items-center">
+              <InlineSVG
+                src="/images/link_arrow.svg"
+                className="fill-current text-icon"
+              />
+              <p className="text-sm">You will now be redirected to the Mintbase Wallet to create a wallet linked to your Passkey.</p>
             </div>
           </div>
 
           <div
-            className={`mb-14 text-center justify-center ${
-              isConnected ? "flex gap-8 mt-8" : ""
-            }`}
+            className={`mb-14 text-center justify-center ${isConnected ? "flex gap-8 mt-8" : ""
+              }`}
           >
             <button
               className="gradientButton text-primaryBtnText rounded px-14 py-3 text-sm font-light"
@@ -101,7 +107,8 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
         </div>
 
         <div className="w-full text-freeUseText bg-bgFreeUse text-center py-2 text-sm px-5 rounded-b-lg">
-          100% free to use: no credit card or crypto required!
+          {/* 100% free to use: no credit card or crypto required! */}
+          A token to celebrate the launch of Aquarius Financial
         </div>
       </div>
     </div>

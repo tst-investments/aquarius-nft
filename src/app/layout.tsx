@@ -7,7 +7,41 @@ import Footer from "@/components/footer";
 import Providers from "@/providers/providers";
 import Navigation from "@/components/navigation";
 import Modal from "@/components/modal";
+import clsx from "clsx";
+import { Metadata } from "next";
+import localFont from "next/font/local";
+import "../../public/font/fonts.css";
 const inter = Inter({ subsets: ["latin"] });
+
+const borna = localFont({
+  src: [
+    {
+      path: "../../public/font/borna-regular-webfont.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/font/borna-medium-webfont.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/font/borna-semibold-webfont.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/font/borna-bold-webfont.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+});
+
+export const metadata: Metadata = {
+  title: "Aquarius",
+  description: "",
+};
 
 export default function RootLayout({
   children,
@@ -15,16 +49,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="lg:min-h-[101vh] min-w-full scrollbar-none"
+      translate="no">
       <body
-        className={`${inter.className} flex min-h-screen flex-col items-center justify-between overflow-x-hidden`}
+        className={clsx(borna.className, "bg-cream flex min-h-screen flex-col items-center justify-between overflow-x-hidden")}
       >
         <div className="flex flex-col min-h-screen relative bg-mainBg w-screen">
           <Providers>
-            <Navigation>
+            {/* <Navigation>
               <Header />
               <Footer />
-            </Navigation>
+            </Navigation> */}
+            <Header />
 
             {children}
 

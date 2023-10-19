@@ -16,10 +16,11 @@ export const FooterButton = ({ onClick }: { onClick: any }) => (
       className="rounded-full h-20 w-20 gradientButton
   flex items-center justify-center"
     >
-      <InlineSVG
+      {/* <InlineSVG
         src="/images/photo_camera.svg"
         className="fill-current text-camera h-12"
-      />
+      /> */}
+      Mint
     </div>
   </button>
 );
@@ -37,10 +38,10 @@ const Footer = () => {
     switch (pathname) {
       case "/":
         return !isClosed ? (
-          <footer className="fixed bottom-0 left-0 flex w-full items-end justify-center bg-primary h-16">
+          <footer className="fixed bottom-0 left-0 flex w-full items-end justify-center bg-primary h-16 z-999">
             <FooterButton
               onClick={
-                isConnected ? () => push("/camera") : () => openModal("default")
+                isConnected ? () => push("/mint") : () => openModal("default")
               }
             />
           </footer>
@@ -50,12 +51,12 @@ const Footer = () => {
           <footer className="fixed bottom-0 left-0 flex w-full items-end justify-center bg-primary h-16">
             <FooterButton
               onClick={
-                isConnected ? () => push("/camera") : () => openModal("default")
+                isConnected ? () => push("/mint") : () => openModal("default")
               }
             />
           </footer>
         ) : null;
-      case "/camera":
+      case "/mint":
         return null;
       default:
         return null;

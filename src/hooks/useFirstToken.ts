@@ -2,10 +2,35 @@ import { FETCH_FIRST_TOKEN } from "@/data/queries/feed.graphl";
 import { useGraphQlQuery } from "@/data/useGraphQlQuery";
 import { constants } from "@/constants";
 import { useEffect, useState } from "react";
+import { useWallet } from "@mintbase-js/react";
+import { useApp } from "@/providers/app";
+
+const FetchUser = `
+  query FetchUser($contractAddress: String, $accountId: String) @cached {
+    token: mb_views_nft_tokens(
+      where: { nft_contract_id: { _eq: $contractAddress }, owner: { _eq: $accountId },, 
+      burned_timestamp: {_is_null: true}, metadata_content_flag: {_is_null: true}, nft_contract_content_flag: {_is_null: true}}, order_by: {minted_timestamp: desc}, limit: 1, offset: 0) {
+      id: token_id
+      createdAt: minted_timestamp
+      media
+      title
+      description
+      metadata_id
+    }
+  }
+`;
 
 export const useFirstToken: any = () => {
   const [newToken, setNewToken] = useState<any>(null);
+  const [userToken, setUserToken] = useState<any>(null);
   const [tokensFetched, setTokensFetched] = useState<any>(null);
+  const { isConnected, activeAccountId } = useWallet();
+  const { mintSuccess } = useApp();
+
+  const tryAgain = () => {
+    setNewToken(null);
+    setTokensFetched(null);
+  };
 
   const queryObj = {
     queryName: "q_FETCH_FIRST_TOKEN",
@@ -18,6 +43,31 @@ export const useFirstToken: any = () => {
   };
 
   const { data, isLoading, refetch: refetchToken } = useGraphQlQuery(queryObj);
+
+  const queryObjUser = {
+    queryName: "q_FetchUser",
+    query: FetchUser,
+    variables: {
+      accountId: activeAccountId,
+      contractAddress: constants.tokenContractAddress,
+    },
+    queryOpts: { staleTime: Infinity, refetchInterval: 10000 },
+  };
+
+  const { data: dataUser, isLoading: isLoadingUser, refetch: refetchUser } = useGraphQlQuery(queryObjUser);
+  console.log("dataUser", dataUser);
+
+  useEffect(() => {
+    if (mintSuccess) {
+      refetchUser
+    }
+  }, [mintSuccess]);
+
+  useEffect(() => {
+    if (dataUser?.token?.length) {
+      setUserToken(dataUser.token[dataUser.token.length - 1]);
+    }
+  }, [activeAccountId, isLoadingUser, dataUser]);
 
   useEffect(() => {
     // media delay
@@ -81,9 +131,13 @@ export const useFirstToken: any = () => {
     }
   }, [data?.token, newToken, tokensFetched]);
 
+
   return {
     newToken: !isLoading ? newToken : null,
     tokensFetched,
     isLoading,
+    tryAgain,
+    userToken: !isLoadingUser ? userToken : null,
+    refetchUser,
   };
 };

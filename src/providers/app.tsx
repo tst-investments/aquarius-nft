@@ -21,6 +21,7 @@ export const AppContext = createContext<{
   isRewardsModalOpen: boolean;
   mintImage: (photo: string) => void;
   isLoading: boolean;
+  mintSuccess: boolean;
 }>({
   cameraRef: undefined,
   setCameraRef: (ref: React.MutableRefObject<any> | undefined) => null,
@@ -32,6 +33,7 @@ export const AppContext = createContext<{
   isRewardsModalOpen: false,
   mintImage: (photo: string) => null,
   isLoading: false,
+  mintSuccess: false,
 });
 
 interface IAppConsumer {
@@ -45,6 +47,7 @@ interface IAppConsumer {
   isRewardsModalOpen: boolean;
   mintImage: (photo: string) => void;
   isLoading: false;
+  mintSuccess: boolean;
 }
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
@@ -54,6 +57,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentPhoto, setCurrentPhoto] = useState(false);
   const { selector, activeAccountId } = useWallet();
   const [isLoading, setLoading] = useState(false);
+  const [mintSuccess, setMintSuccess] = useState(false);
 
   const { push } = useRouter();
 
@@ -81,15 +85,25 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentPhoto(true);
   };
 
+  const fetchImageAsFile = async (imageUrl: any, fileName = 'image.jpg') => {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return new File([blob], fileName, { type: blob.type });
+  };
+
   const _mintImage = async (photo: string) => {
     if (!activeAccountId) return null;
     const wallet = await selector.wallet();
     setLoading(true);
 
+    console.log("minting image", photo);
+
+    const photoFile = await fetchImageAsFile(`/test/${photo}.png`)
+
     const refObject = {
-      title: generateRandomId(10),
-      description: generateRandomId(10),
-      media: convertBase64ToFile(photo),
+      title: "Test NFT " + photo,
+      description: "Test NFT " + photo,
+      media: photoFile,
     };
 
     const uploadedData = await uploadReference(refObject);
@@ -123,6 +137,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       // @ts-ignore
       successUrl: `${protocol}//${domain}${!port ? "" : ":" + port}`,
     });
+    if (result && result.transaction) {
+      setMintSuccess(true);
+    }
   };
 
   return (
@@ -145,6 +162,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
           isRewardsModalOpen,
           mintImage: _mintImage,
           isLoading: isLoading,
+          mintSuccess: mintSuccess,
         }}
       >
         {children}

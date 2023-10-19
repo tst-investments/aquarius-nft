@@ -23,9 +23,9 @@ const Header = () => {
       </button>
       <div className="flex gap-4">
         <button onClick={() => openModal("default")}>
-          {isConnected ? "Connected" : "About"}
+          {isConnected ? "Connected" : "Not Connected"}
         </button>
-        <button onClick={() => push("/leaderboard")}>Leaderboard</button>
+        {/* <button onClick={() => push("/leaderboard")}>Leaderboard</button> */}
       </div>
     </div>
   );
@@ -36,19 +36,30 @@ const Header = () => {
         return (
           <div className="flex w-full justify-between px-4 lg:px-12  items-center">
             <div>
-              <button
+              {/* <button
                 className="font-bold text-xl"
                 onClick={() => push("/")}
               >
-                {process.env.NEXT_PUBLIC_APP_TITLE || "Minsta"}
-              </button>
+                {process.env.NEXT_PUBLIC_APP_TITLE || "Aquarius"}
+              </button> */}
+              <video
+                className="hidden w-[102px] md:w-[130px] lg:w-[120px] 2xl:w-[130px] sm:block"
+                height="auto"
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src="aquarius-logo.webm" type="video/webm" />
+                <source src="aquarius-logo.mp4" type="video/mp4" />
+              </video>
             </div>
             <div className="flex gap-4">
               <button onClick={() => openModal("default")}>
                 {" "}
-                {isConnected ? "Connected" : "About"}
+                {isConnected ? "Connected" : "Not Connected"}
               </button>
-              <button onClick={() => push("/leaderboard")}>Leaderboard</button>
+              {/* <button onClick={() => push("/leaderboard")}>Leaderboard</button> */}
             </div>
           </div>
         );
@@ -63,7 +74,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed left-0 top-0 flex w-full justify-center h-12 bg-primary text-headerText">
+      <header className="fixed left-0 top-0 flex w-full justify-center h-12 sm:bg-cream text-headerText">
         {renderHeaderButtons()}
       </header>
       {isClosed ? (

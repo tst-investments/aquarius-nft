@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Borna";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./borna-regular-webfont.woff2");
+}
+
+@font-face {
+  font-family: "Borna";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./borna-medium-webfont.woff2");
+}
+
+@font-face {
+  font-family: "Borna";
+  font-style: normal;
+  font-weight: 600;
+  src: url("./borna-semibold-webfont.woff2");
+}
+
+@font-face {
+  font-family: "Borna";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./borna-bold-webfont.woff2");
+}

@@ -27,6 +27,7 @@ export const useLeaderBoardData = () => {
   };
 
   const { data, isLoading: loading } = useGraphQlQuery(queryObj);
+  console.log(data);
 
   const texts = {
     prizes: {
@@ -40,6 +41,7 @@ export const useLeaderBoardData = () => {
   };
 
   const { activeAccountId } = useWallet();
+  console.log("activeAccountId", activeAccountId);
 
   const { openModal } = useApp();
 

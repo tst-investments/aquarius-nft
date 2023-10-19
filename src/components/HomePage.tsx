@@ -10,6 +10,9 @@ import { useBlockedNfts } from "@/hooks/useBlockedNfts";
 
 export const HomePage = () => {
   const { newToken, tokensFetched, isLoading } = useFirstToken();
+  console.log("newToken", newToken);
+  console.log("tokensFetched", tokensFetched);
+  console.log("isLoading", isLoading);
 
   const { blockedNfts } = useBlockedNfts();
 
