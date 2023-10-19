@@ -1,4 +1,5 @@
 "use client";
+
 import Header from "@/components/header";
 import "./globals.css";
 import "@near-wallet-selector/modal-ui/styles.css";
@@ -37,11 +38,6 @@ const borna = localFont({
     },
   ],
 });
-
-export const metadata: Metadata = {
-  title: "Aquarius",
-  description: "",
-};
 
 export default function RootLayout({
   children,
