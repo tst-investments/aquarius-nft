@@ -75,7 +75,7 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
                 src="/images/link_arrow.svg"
                 className="fill-current text-icon"
               />
-              <p className="text-sm">We use Mintbase Wallet to create a wallet linked to your device's passkey.</p>
+              <p className="text-sm">We use Mintbase Wallet to create a wallet linked to your device&apos;s passkey.</p>
             </div>
             {!isConnected && !activeAccountId &&
               <div className="flex gap-3 items-center">
