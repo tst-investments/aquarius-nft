@@ -8,7 +8,7 @@ import InlineSVG from "react-inlinesvg";
 
 const Modal = ({ children }: { children?: React.ReactNode }) => {
   const { isMainModalOpen, closeModal } = useApp();
-  const { connect, isConnected } = useWallet();
+  const { connect, isConnected, activeAccountId } = useWallet();
 
   const texts = {
     about: {
@@ -45,7 +45,7 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
       >
         <div className="overflow-y-auto flex-1 h-auto w-full rounded-t-lg text-modalText p-5 max-w-md mx-auto overflow-y-auto flex flex-col">
           <div className="mb-8 flex flex-col gap-2 items-center mt-4">
-            <h1 className="text-3xl font-bold">{process.env.NEXT_PUBLIC_APP_TITLE || "Minsta"}</h1>
+            {/* <h1 className="text-3xl font-bold">{process.env.NEXT_PUBLIC_APP_TITLE || "Minsta"}</h1> */}
           </div>
 
           <div className="text-modalText flex flex-col gap-8 items-start mb-12">
@@ -75,8 +75,18 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
                 src="/images/link_arrow.svg"
                 className="fill-current text-icon"
               />
-              <p className="text-sm">You will now be redirected to the Mintbase Wallet to create a wallet linked to your Passkey.</p>
+              <p className="text-sm">We use Mintbase Wallet to create a wallet linked to your device's passkey.</p>
             </div>
+            {!isConnected && !activeAccountId &&
+              <div className="flex gap-3 items-center">
+                <p className="text-sm">Create your wallet in a few simple steps to get started.</p>
+              </div>
+            }
+            {isConnected && activeAccountId && 
+              <div className="flex gap-3 items-center">
+                <p className="text-sm">Connected as {activeAccountId}</p>
+              </div>
+            }
           </div>
 
           <div
@@ -87,7 +97,7 @@ const Modal = ({ children }: { children?: React.ReactNode }) => {
               className="gradientButton text-primaryBtnText rounded px-14 py-3 text-sm font-light"
               onClick={!isConnected ? () => connect() : () => closeModal()}
             >
-              OK
+              {isConnected ? "Close" : "Connect"}
             </button>
           </div>
 

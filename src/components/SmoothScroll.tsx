@@ -4,8 +4,9 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useApp } from "@/providers/app";
 import { useWallet } from "@mintbase-js/react";
-import { useRouter, useSearchParams  } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useFirstToken } from "@/hooks/useFirstToken";
+import InlineSVG from "react-inlinesvg";
 
 export default function ContentContainer({
   unlockDocument,
@@ -118,8 +119,21 @@ export default function ContentContainer({
                 }
               </a>
             </div>
-            <h1 className="text-center mb-8 text-sm text-gray-400">{userToken?.title}</h1>
-            <button className="w-full">
+            <h1 className="text-center mb-8 text-sm text-gray-400">{!userToken ? "Loading..." : userToken?.title}</h1>
+            <a href={`https://www.mintbase.xyz/human/${activeAccountId}/owned/0`} target="_blank" className="w-full">
+              <button className="w-full mb-8 underline">
+                <a
+                  className="rounded-[10px] text-center text-base font-semibold bg-none py-[11px] text-white block z-0 flex justify-center items-center"
+                >
+                  View on Mintbase
+                  <InlineSVG
+                    src="/images/link_arrow.svg"
+                    className="fill-current text-icon"
+                  />
+                </a>
+              </button>
+            </a>
+            {/* <button className="w-full">
               <a
                 className="rounded-[10px] text-center text-base font-semibold bg-[#C4DF94] py-[11px] text-black block z-0"
                 onClick={
@@ -128,7 +142,7 @@ export default function ContentContainer({
               >
                 Mint Another
               </a>
-            </button>
+            </button> */}
           </>
           :
           <>

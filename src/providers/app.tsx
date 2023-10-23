@@ -93,6 +93,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const _mintImage = async (photo: string) => {
     if (!activeAccountId) return null;
+    if (parseInt(photo) > 50) return null;
     const wallet = await selector.wallet();
     setLoading(true);
 
