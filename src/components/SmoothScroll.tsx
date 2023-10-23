@@ -25,12 +25,12 @@ export default function ContentContainer({
 
   useEffect(() => {
     const interval = setInterval(() => {
-    refetchUser();
+      refetchUser();
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const { takePicture, openModal } = useApp();
+  const { takePicture, openModal, mintSuccess } = useApp();
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { mass: 0.1 });
   const contentRef = useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ export default function ContentContainer({
         style={isLocked || isReducedSize ? undefined : { y }}
         ref={contentRef}
       >
-        {userToken && activeAccountId ?
+        {(userToken && activeAccountId) || mintSuccess ?
           <>
             <h1 className="uppercase text-xl 3xl:text-2xl text-center font-semibold">
               Your Aquarius NFT
@@ -102,11 +102,20 @@ export default function ContentContainer({
             {isConnected && <p className="text-center text-sm text-gray-400">Connected as {activeAccountId}</p>}
             <div className="mt-12 space-y-8 mb-4 lg:space-y-12 w-[80vw] mx-auto lg:w-[458px] 3xl:w-[600px]">
               <a href={`https://www.mintbase.xyz/human/${activeAccountId}/owned/0`} target="_blank" className="w-full">
-                <img
-                  src={userToken.media}
-                  alt="Aquarius NFT"
-                  className="w-full h-auto"
-                />
+                {userToken?.media ?
+                  <img
+                    src={userToken.media}
+                    alt="Aquarius NFT"
+                    className="w-full h-auto"
+                  />
+                  :
+                  <div
+                    className="aspect-square rounded overflow-x-hidden cursor-pointer sm:w-full md:w-72 h-72 xl:w-80 xl:h-80 relative"
+                    key={1}
+                  >
+                    <div className="rounded animate-pulse w-full h-full bg-gray-600 dark:bg-gray-800" />
+                  </div>
+                }
               </a>
             </div>
             <h1 className="text-center mb-8 text-sm text-gray-400">{userToken?.title}</h1>
