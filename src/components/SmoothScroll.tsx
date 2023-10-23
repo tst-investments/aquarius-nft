@@ -4,8 +4,7 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useApp } from "@/providers/app";
 import { useWallet } from "@mintbase-js/react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams  } from "next/navigation";
 import { useFirstToken } from "@/hooks/useFirstToken";
 
 export default function ContentContainer({
@@ -17,7 +16,8 @@ export default function ContentContainer({
   isLocked: boolean;
   isReducedSize: boolean;
 }) {
-  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const mintSuccess = searchParams.get("mintSuccess");
   const { push } = useRouter();
   const { isConnected, activeAccountId } = useWallet();
   const { userToken, refetchUser } = useFirstToken();
@@ -30,7 +30,7 @@ export default function ContentContainer({
     return () => clearInterval(interval);
   }, []);
 
-  const { takePicture, openModal, mintSuccess } = useApp();
+  const { takePicture, openModal } = useApp();
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { mass: 0.1 });
   const contentRef = useRef<HTMLDivElement>(null);
@@ -110,7 +110,7 @@ export default function ContentContainer({
                   />
                   :
                   <div
-                    className="aspect-square rounded overflow-x-hidden cursor-pointer sm:w-full md:w-72 h-72 xl:w-80 xl:h-80 relative"
+                    className="aspect-square rounded overflow-x-hidden cursor-pointer w-full relative"
                     key={1}
                   >
                     <div className="rounded animate-pulse w-full h-full bg-gray-600 dark:bg-gray-800" />

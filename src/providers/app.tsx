@@ -135,10 +135,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         },
       ],
       // @ts-ignore
-      successUrl: `${protocol}//${domain}${!port ? "" : ":" + port}`,
+      successUrl: `${protocol}//${domain}${!port ? "" : ":" + port}/?mintSuccess=true`,
     });
     if (result && result.transaction) {
       setMintSuccess(true);
+      console.log("mint success", result);
     }
   };
 
