@@ -23,6 +23,7 @@ const FetchUser = `
 export const useFirstToken: any = () => {
   const [newToken, setNewToken] = useState<any>(null);
   const [userToken, setUserToken] = useState<any>(null);
+  const [noneMinted, setNoneMinted] = useState<boolean>(false);
   const [tokensFetched, setTokensFetched] = useState<any>(null);
   const { isConnected, activeAccountId } = useWallet();
   const { mintSuccess } = useApp();
@@ -71,6 +72,9 @@ export const useFirstToken: any = () => {
 
   useEffect(() => {
     // media delay
+    if (data?.token.length < 1 && !isLoading) {
+      setNoneMinted(true);
+    }
 
     if (tokensFetched && tokensFetched?.length > 1) {
       // window.location.reload();
@@ -139,5 +143,6 @@ export const useFirstToken: any = () => {
     tryAgain,
     userToken: !isLoadingUser ? userToken : null,
     refetchUser,
+    noneMinted
   };
 };

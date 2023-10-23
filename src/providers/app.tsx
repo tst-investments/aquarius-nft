@@ -99,11 +99,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
     console.log("minting image", photo);
 
-    const photoFile = await fetchImageAsFile(`/test/${photo}.png`)
+    const photoFile = await fetchImageAsFile(`/nft/${photo}.png`)
 
     const refObject = {
-      title: "Test NFT " + photo,
-      description: "Test NFT " + photo,
+      title: "Aquarius NFT #" + photo,
+      description: "This NFT commemorates the brand launch of Aquarius Financial in Boston, MA.",
       media: photoFile,
     };
 

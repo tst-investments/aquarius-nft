@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation'
 
 export default function MintPage() {
-    const { newToken, tokensFetched, isLoading, tryAgain } = useFirstToken();
+    const { newToken, isLoading, noneMinted } = useFirstToken();
     console.log(newToken);
+    console.log(noneMinted);
     const router = useRouter();
     // if (newToken && tokensFetched && !isLoading) {
     //     return <Mint currentPhoto={`/nft/${newToken + 1}.png`} backStep={tryAgain} />;
@@ -14,8 +15,12 @@ export default function MintPage() {
 
     return (
         <>
-            {newToken && !isLoading ? (
-                <Mint currentPhoto={`/test/${Number(newToken?.id) + 1}.png`} id={(Number(newToken?.id) + 1).toString()} backStep={router.back} />
+            {(newToken && !isLoading) || noneMinted ? (
+                noneMinted ? (
+                    <Mint currentPhoto={`/nft/0.png`} id="0" backStep={router.back} />
+                ) : (
+                    <Mint currentPhoto={`/nft/${Number(newToken?.id) + 1}.png`} id={(Number(newToken?.id) + 1).toString()} backStep={router.back} />
+                )
             ) : (
                 <main className="h-camera overflow-hidden	 w-screen flex items-center justify-center">
                     <div className="h-1/2 relative m-camera">
